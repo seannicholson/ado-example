@@ -20,7 +20,7 @@ steps:
       echo "##[command]Making WizCLI executable"
       sudo chmod +x /usr/bin/wizcli
       echo "##[command]Pulling image if not available yet"
-      docker pull $(imageName)
+      # docker pull $(imageName)
 #- task: UniversalPackages@0
 #  displayName: 'Obtain cached Wiz auth'
 #  continueOnError: true
