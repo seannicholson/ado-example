@@ -50,7 +50,9 @@ steps:
       export WIZ_ENV=test
       /usr/bin/wizcli auth --id $(WIZ_ID) --secret $(WIZ_SECRET)
       /usr/bin/wizcli iac scan --path Dockerfile --policy "SMN-ADO-IAC"
+      if [ $? -ne 0 ]; then exit 1; fi
       /usr/bin/wizcli docker scan --image $(imageName) --policy "SMN ADO Image Policy"
+      if [ $? -ne 0 ]; then exit 1; fi
       if [[ "$AGENT_JOBSTATUS" == "SucceededWithIssues" ]]; then exit 1; fi
       # sudo cp ${HOME}/.wiz/auth.json $(Build.ArtifactStagingDirectory)
       # WIZ_ENV=test /usr/bin/wizcli docker scan --image $(imageName) --policy "SMN ADO Image Policy"
