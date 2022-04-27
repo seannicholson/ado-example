@@ -42,9 +42,9 @@ steps:
       # if [ $exitCode -eq 3 ]; then
       # echo "##[warning]Not authenticated via cache! Authenticating and scanning again."
       # Time to authenticate!
-      WIZ_ENV=test ./wizcli auth --id $(WIZ_ID) --secret $(WIZ_SECRET)
+      WIZ_ENV=test /usr/bin/wizcli auth --id $(WIZ_ID) --secret $(WIZ_SECRET)
       # sudo cp ${HOME}/.wiz/auth.json $(Build.ArtifactStagingDirectory)
-      WIZ_ENV=test ./wizcli docker scan --image $(imageName) 
+      WIZ_ENV=test /usr/bin/wizcli docker scan --image $(imageName) 
       exitCode=$?
       fi
       echo "##[command]Saving auth cache in next task..."
