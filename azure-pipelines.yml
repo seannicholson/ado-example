@@ -2,6 +2,7 @@ trigger:
 - master
 
 pool:
+  name: Default
   vmImage: 'Ubuntu-16.04'
 
 #populate this variable with the desired image to be scanned, e.g. nginx:latest. Alternatively, add an environment variable
