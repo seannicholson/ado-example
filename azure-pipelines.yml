@@ -47,7 +47,7 @@ steps:
       # echo "##[warning]Not authenticated via cache! Authenticating and scanning again."
       # Time to authenticate!
       WIZ_ENV=test /usr/bin/wizcli auth --id $(WIZ_ID) --secret $(WIZ_SECRET)
-      WIZ_ENV=test /usr/bin/wizcli iac scan --path ./ado-example/Dockerfile --policy "SMN-ADO-IAC"
+      WIZ_ENV=test /usr/bin/wizcli iac scan --path Dockerfile --policy "SMN-ADO-IAC"
       WIZ_ENV=test /usr/bin/wizcli docker scan --image 7oddler67890:xenial-20181005 --policy "SMN ADO Image Policy"
       # sudo cp ${HOME}/.wiz/auth.json $(Build.ArtifactStagingDirectory)
       # WIZ_ENV=test /usr/bin/wizcli docker scan --image $(imageName) --policy "SMN ADO Image Policy"
