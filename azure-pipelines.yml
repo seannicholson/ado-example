@@ -7,7 +7,8 @@ pool:
 
 #populate this variable with the desired image to be scanned, e.g. nginx:latest. Alternatively, add an environment variable
 variables:
-  imageName: 'nginx:latest'
+  #imageName: 'nginx:latest'
+  imageName: 'ubuntu:xenial-20181005'
 
 steps:
 - task: CmdLine@2
@@ -19,31 +20,31 @@ steps:
       sudo chmod +x /usr/bin/wizcli
       echo "##[command]Pulling image if not available yet"
       docker pull $(imageName)
-- task: UniversalPackages@0
-  displayName: 'Obtain cached Wiz auth'
-  continueOnError: true
-  inputs:
-    command: download
-    vstsFeed: 'wiz-demo/ado-demo'
-    vstsFeedPackage: 'auth.json'
-    vstsPackageVersion: '1.0.0'
-    downloadDirectory: '$(Build.SourcesDirectory)'
+#- task: UniversalPackages@0
+#  displayName: 'Obtain cached Wiz auth'
+#  continueOnError: true
+#  inputs:
+#    command: download
+#    vstsFeed: 'wiz-demo/ado-demo'
+#    vstsFeedPackage: 'auth.json'
+#    vstsPackageVersion: '1.0.0'
+#    downloadDirectory: '$(Build.SourcesDirectory)'
 
 - task: CmdLine@2
   inputs:
     script: |
-      echo "##[command]Checking if auth cache exists and move it to its rightful place..."
-      mkdir ${HOME}/.wiz
-      sudo mv $(Build.SourcesDirectory)/auth.json ${HOME}/.wiz
-      echo "##[command]Trying scan with cached auth"
-      /usr/bin/ WIZ_ENV=test./wizcli docker scan --image $(imageName) 
+      # echo "##[command]Checking if auth cache exists and move it to its rightful place..."
+      # mkdir ${HOME}/.wiz
+      # sudo mv $(Build.SourcesDirectory)/auth.json ${HOME}/.wiz
+      # echo "##[command]Trying scan with cached auth"
+      # /usr/bin/ WIZ_ENV=test./wizcli docker scan --image $(imageName) 
+      # exitCode=$?
+      # if [ $exitCode -eq 3 ]; then
+      # echo "##[warning]Not authenticated via cache! Authenticating and scanning again."
+      # Time to authenticate!
+      WIZ_ENV=test ./wizcli auth --id $(WIZ_ID) --secret $(WIZ_SECRET)
+      # sudo cp ${HOME}/.wiz/auth.json $(Build.ArtifactStagingDirectory)
+      WIZ_ENV=test ./wizcli docker scan --image $(imageName) 
       exitCode=$?
-      if [ $exitCode -eq 3 ]; then
-        echo "##[warning]Not authenticated via cache! Authenticating and scanning again."
-        # Time to authenticate!
-        /usr/bin/ WIZ_ENV=test ./wizcli auth --id $(WIZ_ID) --secret $(WIZ_SECRET)
-        sudo cp ${HOME}/.wiz/auth.json $(Build.ArtifactStagingDirectory)
-        /usr/bin/ WIZ_ENV=test ./wizcli docker scan --image $(imageName) 
-        exitCode=$?
       fi
       echo "##[command]Saving auth cache in next task..."
