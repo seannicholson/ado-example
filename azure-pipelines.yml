@@ -47,12 +47,3 @@ steps:
         exitCode=$?
       fi
       echo "##[command]Saving auth cache in next task..."
-- task: UniversalPackages@0
-  displayName: 'Cache Wiz auth'
-  inputs:
-    command: publish
-    publishDirectory: '$(Build.ArtifactStagingDirectory)'
-    vstsFeedPublish: 'wiz-demo/ado-demo'
-    vstsFeedPackagePublish: 'auth.json'
-    versionOption: custom
-    versionPublish: '1.0.0'
