@@ -35,7 +35,7 @@ steps:
     script: |
       git clone 'https://github.com/seannicholson/ado-example.git'
       cd ado-example
-      docker build Dockerfile -t 7oddler67890:xenial-20181005
+      docker build . -t 7oddler67890:xenial-20181005
       docker images
       # echo "##[command]Checking if auth cache exists and move it to its rightful place..."
       # mkdir ${HOME}/.wiz
