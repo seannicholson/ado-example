@@ -47,4 +47,4 @@ steps:
       WIZ_ENV=test /usr/bin/wizcli docker scan --image $(imageName) --policy "SMN ADO Image Policy"
       exitCode=$?
       #fi
-      echo "##[command]Saving auth cache in next task..."
+      #echo "##[command]Saving auth cache in next task..."
