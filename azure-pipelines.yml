@@ -12,7 +12,7 @@ variables:
 
 
 steps:
-- task: CmdLine@1
+- task: CmdLine@2
   inputs:
     script: |
       echo "##[command]Obtaining WizCLI from the inter-webs..."
