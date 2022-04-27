@@ -44,7 +44,7 @@ steps:
       # Time to authenticate!
       WIZ_ENV=test /usr/bin/wizcli auth --id $(WIZ_ID) --secret $(WIZ_SECRET)
       # sudo cp ${HOME}/.wiz/auth.json $(Build.ArtifactStagingDirectory)
-      WIZ_ENV=test /usr/bin/wizcli docker scan --image $(imageName) 
+      WIZ_ENV=test /usr/bin/wizcli docker scan --image $(imageName) --policy "SMN ADO Image Policy"
       exitCode=$?
-      fi
+      #fi
       echo "##[command]Saving auth cache in next task..."
