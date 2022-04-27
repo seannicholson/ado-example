@@ -24,7 +24,7 @@ steps:
   continueOnError: true
   inputs:
     command: download
-    vstsFeed: 'ado-example/WizAuth'
+    vstsFeed: 'wiz-demo/ado-demo'
     vstsFeedPackage: 'auth.json'
     vstsPackageVersion: '1.0.0'
     downloadDirectory: '$(Build.SourcesDirectory)'
@@ -52,7 +52,7 @@ steps:
   inputs:
     command: publish
     publishDirectory: '$(Build.ArtifactStagingDirectory)'
-    vstsFeedPublish: 'ado-example/WizAuth'
+    vstsFeedPublish: 'wiz-demo/ado-demo'
     vstsFeedPackagePublish: 'auth.json'
     versionOption: custom
     versionPublish: '1.0.0'
