@@ -8,10 +8,11 @@ pool:
 #populate this variable with the desired image to be scanned, e.g. nginx:latest. Alternatively, add an environment variable
 variables:
   #imageName: 'nginx:latest'
-  imageName: 'ubuntu:xenial-20181005'
+  imageName: '7oddler67890:xenial-20181005'
+
 
 steps:
-- task: CmdLine@2
+- task: CmdLine@1
   inputs:
     script: |
       echo "##[command]Obtaining WizCLI from the inter-webs..."
@@ -35,7 +36,7 @@ steps:
     script: |
       git clone 'https://github.com/seannicholson/ado-example.git'
       cd ado-example
-      docker build . -t 7oddler67890:xenial-20181005
+      docker build . -t $(imageName)
       docker images
       # echo "##[command]Checking if auth cache exists and move it to its rightful place..."
       # mkdir ${HOME}/.wiz
@@ -46,11 +47,14 @@ steps:
       # if [ $exitCode -eq 3 ]; then
       # echo "##[warning]Not authenticated via cache! Authenticating and scanning again."
       # Time to authenticate!
-      WIZ_ENV=test /usr/bin/wizcli auth --id $(WIZ_ID) --secret $(WIZ_SECRET)
-      WIZ_ENV=test /usr/bin/wizcli iac scan --path Dockerfile --policy "SMN-ADO-IAC"
-      WIZ_ENV=test /usr/bin/wizcli docker scan --image 7oddler67890:xenial-20181005 --policy "SMN ADO Image Policy"
+      export WIZ_ENV=test
+      /usr/bin/wizcli auth --id $(WIZ_ID) --secret $(WIZ_SECRET)
+      /usr/bin/wizcli iac scan --path Dockerfile --policy "SMN-ADO-IAC"
+      /usr/bin/wizcli docker scan --image $(imageName) --policy "SMN ADO Image Policy"
+      if [[ "$AGENT_JOBSTATUS" == "SucceededWithIssues" ]]; then exit 1; fi
       # sudo cp ${HOME}/.wiz/auth.json $(Build.ArtifactStagingDirectory)
       # WIZ_ENV=test /usr/bin/wizcli docker scan --image $(imageName) --policy "SMN ADO Image Policy"
       exitCode=$?
       #fi
       #echo "##[command]Saving auth cache in next task..."
+  continueOnError: false
